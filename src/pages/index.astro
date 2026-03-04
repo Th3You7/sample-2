@@ -1,16 +1,77 @@
 ---
+import { getImage } from 'astro:assets';
+import { SITE } from 'astrowind:config';
+import { getPermalink, getHomePermalink } from '~/utils/permalinks';
 import Layout from '~/layouts/PageLayout.astro';
+
+const home = getHomePermalink();
+const brand = SITE?.name ?? 'Our service';
+const cl = 'text-primary font-medium hover:underline';
 
 import Hero from '~/components/widgets/Hero.astro';
 import Note from '~/components/widgets/Note.astro';
 import Features from '~/components/widgets/Features.astro';
-import Features2 from '~/components/widgets/Features2.astro';
 import Steps from '~/components/widgets/Steps.astro';
 import Content from '~/components/widgets/Content.astro';
+import Headline from '~/components/ui/Headline.astro';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import Brands from '~/components/widgets/Brands.astro';
+
+import sportPremier from '~/assets/images/sports/premier_league.webp';
+import sportBundesliga from '~/assets/images/sports/bundesliga.webp';
+import sportSerieA from '~/assets/images/sports/serie_a.webp';
+import sportLiga from '~/assets/images/sports/liga.webp';
+import sportLigaPor from '~/assets/images/sports/liga_por.webp';
+
+import seriesHbo from '~/assets/images/series/hbo_max.webp';
+import seriesHulu from '~/assets/images/series/hulu.webp';
+import seriesPrime from '~/assets/images/series/prime_video.webp';
+import seriesPeacock from '~/assets/images/series/peacock.webp';
+import seriesShowtime from '~/assets/images/series/showtime.webp';
+import seriesApple from '~/assets/images/series/apple_tv.webp';
+import seriesParamount from '~/assets/images/series/paramount+.webp';
+
+import devicesImg from '~/assets/images/devices/devices.webp';
+
+const sportsResolved = await Promise.all([
+  getImage({ src: sportPremier, width: 500 }),
+  getImage({ src: sportBundesliga, width: 500 }),
+  getImage({ src: sportSerieA, width: 500 }),
+  getImage({ src: sportLiga, width: 500 }),
+  getImage({ src: sportLigaPor, width: 500 }),
+]);
+const seriesResolved = await Promise.all([
+  getImage({ src: seriesHbo, width: 500 }),
+  getImage({ src: seriesHulu, width: 500 }),
+  getImage({ src: seriesPrime, width: 500 }),
+  getImage({ src: seriesPeacock, width: 500 }),
+  getImage({ src: seriesShowtime, width: 500 }),
+  getImage({ src: seriesApple, width: 500 }),
+  getImage({ src: seriesParamount, width: 500 }),
+]);
+const devicesResolved = await getImage({ src: devicesImg, width: 500 });
+
+const sportsImages = [
+  { src: sportsResolved[0].src, alt: 'Premier League' },
+  { src: sportsResolved[1].src, alt: 'Bundesliga' },
+  { src: sportsResolved[2].src, alt: 'Serie A' },
+  { src: sportsResolved[3].src, alt: 'La Liga' },
+  { src: sportsResolved[4].src, alt: 'Liga Portugal' },
+];
+const seriesImages = [
+  { src: seriesResolved[0].src, alt: 'HBO Max' },
+  { src: seriesResolved[1].src, alt: 'Hulu' },
+  { src: seriesResolved[2].src, alt: 'Prime Video' },
+  { src: seriesResolved[3].src, alt: 'Peacock' },
+  { src: seriesResolved[4].src, alt: 'Showtime' },
+  { src: seriesResolved[5].src, alt: 'Apple TV+' },
+  { src: seriesResolved[6].src, alt: 'Paramount+' },
+];
 
 const metadata = {
   title: 'AstroWind — Free template for creating websites with Astro + Tailwind CSS',
@@ -25,113 +86,337 @@ const metadata = {
     actions={[
       {
         variant: 'primary',
-        text: 'Get template',
-        href: 'https://github.com/arthelokyo/astrowind',
-        target: '_blank',
-        icon: 'tabler:download',
+        text: 'Buy now',
+        href: 'https://wa.me/212780761806',
       },
-      { text: 'Learn more', href: '#features' },
+      { text: 'Free trial', href: 'https://wa.me/212780761806' },
     ]}
-    image={{ src: '~/assets/images/hero-image.png', alt: 'AstroWind Hero Image' }}
+    image={{
+      src: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      alt: 'Watch live TV, sports, and movies in HD on your screen—premium IPTV streaming at home.',
+    }}
   >
     <Fragment slot="title">
-      Free template for <span class="hidden xl:inline">creating websites with</span>
-      <span class="text-accent dark:text-white"> Astro 5.0</span> + Tailwind CSS
+      Premium <span class="text-accent dark:text-white">IPTV</span> & Streaming
+      <span class="hidden xl:inline"> for Your Home</span>
     </Fragment>
 
     <Fragment slot="subtitle">
       <span class="hidden sm:inline">
-        <span class="font-semibold">AstroWind</span> is a free, customizable and production-ready template for Astro 5.0
-        + Tailwind CSS.</span
-      >
-      <span class="block mb-1 sm:hidden font-bold text-blue-600">AstroWind: Production-ready.</span>
-      Suitable for Startups, Small Business, SaaS websites, Professional Portfolios, Marketing websites, Landing Pages &
-      Blogs.
+        <a href={home} class={cl}>{brand}</a> delivers live TV, sports, movies, and series in HD. Reliable streams, no buffering.{' '}
+        <a href={getPermalink('/pricing')} class={cl}>View our plans</a>
+        {' '}or{' '}
+        <a href="https://wa.me/212780761806" class={cl}>start your free trial</a>—no commitment. Explore our <a href={`${home}#features`} class={cl}>features</a>.
+      </span>
+      <span class="block mb-1 sm:hidden font-bold text-blue-600">
+        <a href={home} class="underline">{brand}</a>
+        {' · '}
+        <a href={getPermalink('/pricing')} class="underline">View plans</a>
+        {' · '}
+        <a href="https://wa.me/212780761806" class="underline">Free trial</a>
+      </span>
     </Fragment>
   </Hero>
 
   <!-- Note Widget ******************* -->
 
-  <Note title="Philosophy:" description="Simplicity, Best Practices and High Performance" />
+  <Note
+    title="Our philosophy:"
+    description={'At <a href="' + home + '" class="' + cl + '">' + brand + '</a>, your satisfaction or your money back. We\'re here for you—no fine print, no hassle. Learn more <a href="' + getPermalink('/about') + '" class="' + cl + '">about us</a> or <a href="' + getPermalink('/contact') + '" class="' + cl + '">contact us</a>.'}
+  />
 
   <!-- Features Widget *************** -->
 
   <Features
     id="features"
     tagline="Features"
-    title="What you get with AstroWind"
-    subtitle="One of the most professional and comprehensive templates currently on the market. Most starred & forked Astro theme in 2022, 2023 and 2024."
+    title="What you get with our IPTV service"
+    subtitle={'<a href="' + home + '" class="' + cl + '">' + brand + '</a> offers reliable streaming, flexible plans, and support you can count on. Everything you need to enjoy live TV, sports, and entertainment. See our <a href="' + getPermalink('/pricing') + '" class="' + cl + '">pricing plans</a>, check our <a href="' + home + '#pricing" class="' + cl + '">plans here</a>, or <a href="' + getPermalink('/contact') + '" class="' + cl + '">contact us</a>.'}
     items={[
       {
-        title: 'Astro + Tailwind CSS Integration',
+        title: 'HD & 4K Quality',
         description:
-          'A seamless integration between two great frameworks that offer high productivity, performance and versatility.',
-        icon: 'tabler:brand-tailwind',
+          'Crystal-clear picture quality with full support for Full HD and 4K streaming on compatible devices. Enjoy movies, sports, and live TV in the sharpest detail with minimal buffering and stable streams.',
+        icon: 'tabler:device-tv',
       },
       {
-        title: 'Ready-to-use Components',
+        title: '24/7 Support',
         description:
-          'Widgets made with Tailwind CSS ready to be used in Marketing Websites, SaaS, Blogs, Personal Profiles, Small Business...',
-        icon: 'tabler:components',
+          'Our dedicated support team is available around the clock to help you with any questions or technical issues. Get fast responses via WhatsApp so you can enjoy your channels without hassle.',
+        icon: 'tabler:headset',
       },
       {
-        title: 'Best Practices',
+        title: 'All Devices',
         description:
-          'Creating secure, efficient, and user-friendly websites that deliver exceptional experiences and lasting value.',
-        icon: 'tabler:list-check',
+          'Watch on Smart TV, Android, iOS, Fire Stick, or any device. One subscription gives you unlimited screens so the whole family can stream at once from TV, phone, tablet, or laptop. Free trial available.',
+        icon: 'tabler:devices',
       },
       {
-        title: 'Excellent Page Speed',
+        title: 'No Contract',
         description:
-          'Having a good page speed impacts organic search ranking, improves user experience (UI/UX) and increase conversion rates.',
-        icon: 'tabler:rocket',
+          'Flexible plans with no long-term commitment. Cancel anytime with no hidden fees or auto-renewal traps. You stay in control of your subscription.',
+        icon: 'tabler:calendar-off',
       },
       {
-        title: 'Search Engine Optimization (SEO)',
+        title: 'Instant Activation',
         description:
-          "SEO lies in its ability to enhance a website's visibility, driving organic traffic and enabling it to reach a wider audience.",
-        icon: 'tabler:arrows-right-left',
+          'Your service is activated immediately after payment. No waiting—start watching within minutes. We send your credentials right away so you can stream without delay.',
+        icon: 'tabler:bolt',
       },
       {
-        title: 'Open to new ideas and contributions',
+        title: 'Satisfy or Refund',
         description:
-          'Embracing a culture that is open to new ideas and contributions is integral fostering innovation, collaboration, and a dynamic user experience.',
-        icon: 'tabler:bulb',
+          'We stand behind our service. If you are not satisfied, we offer a clear refund policy. Your satisfaction is our priority, so you can try us with confidence.',
+        icon: 'tabler:shield-check',
       },
     ]}
   />
 
-  <!-- Content Widget **************** -->
+  <!-- Pricing -->
 
-  <Content
-    isReversed
-    tagline="Inside template"
-    title="AstroWind's Blueprint: Fun Meets Functionality!"
-    items={[
+  <Pricing
+    id="pricing"
+    title="Choose your plan"
+    subtitle={'All plans include the same features. The longer you subscribe, the more you save. Full details on our <a href="' + getPermalink('/pricing') + '" class="' + cl + '">pricing page</a>. See also our <a href="' + home + '#faqs" class="' + cl + '">FAQ</a> and <a href="' + getPermalink('/about') + '" class="' + cl + '">about ' + brand + '</a>.'}
+    prices={[
       {
-        title: 'Built on top of Astro 5.0',
-        description:
-          'Benefiting from the performance and developer-friendly features of this modern static site generator.',
+        title: 'Monthly',
+        subtitle: '',
+        price: 17,
+        period: '/month',
+        items: [
+          { description: '50,000+ channels' },
+          { description: 'No freeze' },
+          { description: 'Free guidance' },
+          { description: 'FHD, 4K, 8K' },
+          { description: 'All devices' },
+          { description: 'Privacy protection & built-in VPN' },
+          { description: 'Free auto updates' },
+          { description: 'Anti-freeze TM 9.8 technology' },
+          { description: 'Available EPG' },
+          { description: '24/7 support' },
+        ],
+        callToAction: { text: 'Buy now', href: 'https://wa.me/212780761806' },
       },
       {
-        title: 'Styled using Tailwind CSS',
-        description:
-          'Facilitating rapid design and consistent styling with this highly popular utility-first CSS framework.',
+        title: '3 Months',
+        subtitle: 'Save 17%',
+        price: 37,
+        period: '/3 months',
+        items: [
+          { description: '50,000+ channels' },
+          { description: 'No freeze' },
+          { description: 'Free guidance' },
+          { description: 'FHD, 4K, 8K' },
+          { description: 'All devices' },
+          { description: 'Privacy protection & built-in VPN' },
+          { description: 'Free auto updates' },
+          { description: 'Anti-freeze TM 9.8 technology' },
+          { description: 'Available EPG' },
+          { description: '24/7 support' },
+        ],
+        callToAction: { text: 'Buy now', href: 'https://wa.me/212780761806' },
       },
       {
-        title: 'Cross-browser compatibility',
-        description:
-          'Ensure your website looks and functions consistently across various web browsers, delivering a seamless experience to all users.',
+        title: '6 Months',
+        subtitle: 'Save 25%',
+        price: 49,
+        period: '/6 months',
+        items: [
+          { description: '50,000+ channels' },
+          { description: 'No freeze' },
+          { description: 'Free guidance' },
+          { description: 'FHD, 4K, 8K' },
+          { description: 'All devices' },
+          { description: 'Privacy protection & built-in VPN' },
+          { description: 'Free auto updates' },
+          { description: 'Anti-freeze TM 9.8 technology' },
+          { description: 'Available EPG' },
+          { description: '24/7 support' },
+        ],
+        callToAction: { text: 'Buy now', href: 'https://wa.me/212780761806' },
+        hasRibbon: true,
+        ribbonTitle: 'Popular',
+      },
+      {
+        title: 'Yearly',
+        subtitle: 'Save 33%',
+        price: 67,
+        period: '/year',
+        items: [
+          { description: '50,000+ channels' },
+          { description: 'No freeze' },
+          { description: 'Free guidance' },
+          { description: 'FHD, 4K, 8K' },
+          { description: 'All devices' },
+          { description: 'Privacy protection & built-in VPN' },
+          { description: 'Free auto updates' },
+          { description: 'Anti-freeze TM 9.8 technology' },
+          { description: 'Available EPG' },
+          { description: '24/7 support' },
+        ],
+        callToAction: { text: 'Buy now', href: 'https://wa.me/212780761806' },
       },
     ]}
+  />
+
+  <!-- Testimonials -->
+
+  <Testimonials
+    title="Words from real customers"
+    subtitle={'See what our subscribers say about <a href="' + home + '" class="' + cl + '">' + brand + '</a>. <a href="' + getPermalink('/pricing') + '" class="' + cl + '">View plans</a> or <a href="' + getPermalink('/contact') + '" class="' + cl + '">get in touch</a>.'}
+    testimonials={[
+      {
+        testimonial: `Best IPTV I've tried. HD and 4K channels work perfectly, no buffering. Support answered in minutes when I had a question.`,
+        name: 'Emily',
+        job: 'Miami, USA',
+        image: {
+          src: 'https://images.unsplash.com/photo-1618835962148-cf177563c6c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=930&q=80',
+          alt: 'Customer',
+        },
+      },
+      {
+        testimonial: `Watching on my Fire Stick and phone with one subscription. Setup was instant and the picture quality is great. Very happy.`,
+        name: 'James',
+        job: 'London, UK',
+        image: {
+          src: 'https://images.unsplash.com/photo-1561406636-b80293969660?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80',
+          alt: 'Customer',
+        },
+      },
+      {
+        testimonial: `No contract was a big plus for me. I tried the free trial and stayed. Sports and movies in one place, no hassle.`,
+        name: 'Sofia',
+        job: 'Madrid, Spain',
+        image: {
+          src: 'https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=824&q=80',
+          alt: 'Customer',
+        },
+      },
+      {
+        testimonial: `Activation was literally minutes after payment. I was watching on my Smart TV the same evening. Solid service.`,
+        name: 'Michael',
+        job: 'Toronto, Canada',
+        image: {
+          src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+          alt: 'Customer',
+        },
+      },
+      {
+        testimonial: `Family plan lets us all stream at once—TV, tablets, phones. No hidden fees and support is there when you need them.`,
+        name: 'Lisa',
+        job: 'Sydney, Australia',
+        image: {
+          src: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+          alt: 'Customer',
+        },
+      },
+      {
+        testimonial: `Had a small issue, got a refund with no questions. Then I gave it another try and it's been smooth ever since. Trust them.`,
+        name: 'David',
+        job: 'Berlin, Germany',
+        image: {
+          src: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+          alt: 'Customer',
+        },
+      },
+    ]}
+  />
+
+  <!-- Pay with -->
+
+  <Brands
+    title="We accept"
+    subtitle="Pay with Visa, Mastercard, PayPal and more."
+    icons={[]}
+    images={[
+      {
+        src: 'https://cdn.pixabay.com/photo/2021/12/06/13/48/visa-6850402_1280.png',
+        alt: 'Visa',
+      },
+      {
+        src: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 32"><circle cx="18" cy="16" r="10" fill="#EB001B"/><circle cx="30" cy="16" r="10" fill="#F79E1B"/></svg>'),
+        alt: 'Mastercard',
+      },
+      {
+        src: 'https://cdn.pixabay.com/photo/2015/05/26/09/37/paypal-784404_1280.png',
+        alt: 'PayPal',
+      },
+    ]}
+  />
+
+  <!-- Content, channels & categories -->
+
+  <Headline
+    tagline="Content & channels"
+    title="Sports, series, and more—all in one place"
+    subtitle={'<a href="' + home + '" class="' + cl + '">' + brand + '</a> brings you live TV, movies, and sports in HD. One subscription, every device. <a href="' + getPermalink('/about') + '" class="' + cl + '">Learn about our service</a>, <a href="' + home + '#pricing" class="' + cl + '">see plans</a>, or <a href="' + getPermalink('/contact') + '" class="' + cl + '">contact us</a>.'}
+    classes={{ container: 'max-w-3xl mx-auto mb-12 md:mb-16' }}
+  />
+
+  <Content
+    id="sports"
+    tagline=""
+    title=""
+    classes={{ container: 'py-6 md:py-8 lg:py-10' }}
+    items={[
+      { description: 'Premier League, La Liga, Serie A, Bundesliga and more' },
+      { description: 'Live streams in HD with minimal buffering' },
+      { description: 'All major sports and events covered' },
+      { description: 'Never miss a match—watch live or catch up' },
+    ]}
+    images={sportsImages}
+  >
+    <Fragment slot="content">
+      <p class="text-lg text-muted dark:text-slate-400"><a href={home} class={cl}>{brand}</a> streams live sports and events in HD. <a href={`${home}#pricing`} class={cl}>View plans</a>.</p>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <Content
+    id="series"
+    isReversed
+    tagline=""
+    title=""
+    classes={{ container: 'py-6 md:py-8 lg:py-10' }}
+    items={[
+      { description: 'Thousands of series and movies' },
+      { description: 'HBO, Disney+, Hulu and more in one place' },
+      { description: 'Popular streaming brands included' },
+      { description: 'New releases and classics' },
+    ]}
+    images={seriesImages}
+  >
+    <Fragment slot="content">
+      <p class="text-lg text-muted dark:text-slate-400">One place for your favourite shows and films. <a href={getPermalink('/pricing')} class={cl}>See our plans</a> and <a href={getPermalink('/about')} class={cl}>about us</a>.</p>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <Content
+    id="devices"
+    tagline=""
+    title=""
+    classes={{ container: 'py-6 md:py-8 lg:py-10' }}
+    items={[
+      { description: 'Smart TV, Android, iOS, Fire Stick' },
+      { description: 'Tablet, laptop, and phone' },
+      { description: 'One subscription, unlimited screens' },
+      { description: 'Whole family can stream at once' },
+    ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Colorful Image',
+      src: devicesResolved.src,
+      alt: 'Watch on any device',
     }}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Building on modern foundations</h3>
-      Gain a competitive advantage by incorporating industry leading practices
+      <p class="text-lg text-muted dark:text-slate-400"><a href={home} class={cl}>{brand}</a>: watch on any device you own. <a href={`${home}#features`} class={cl}>Features</a> · <a href={getPermalink('/contact')} class={cl}>Contact</a>.</p>
     </Fragment>
 
     <Fragment slot="bg">
@@ -139,226 +424,87 @@ const metadata = {
     </Fragment>
   </Content>
 
-  <!-- Content Widget **************** -->
-
-  <Content
-    isAfterContent
-    items={[
-      {
-        title: 'High level of customization',
-        description: `Tailor the template effortlessly to match your brand's identity and requirements, making your website distinct and saving you time.`,
-      },
-      {
-        title: 'Multiple layout possibilities',
-        description:
-          'Explore various layout options to find the structure that best presents your content, enhancing user engagement and navigation.',
-      },
-      {
-        title: 'Fully responsive design',
-        description:
-          "Ensure your website's optimal performance on various devices and screen sizes, providing a consistent and enjoyable user experience.",
-      },
-      {
-        title: 'Integration of media',
-        description:
-          'Seamlessly incorporate images, videos, and multimedia elements that enhance your content and engage visitors effectively.',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80',
-      alt: 'Blueprint Image',
-    }}
-  >
-    <Fragment slot="content">Ensure your online presence truly represents you.</Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <!-- Content Widget **************** -->
-
-  <Content
-    isReversed
-    isAfterContent
-    items={[
-      {
-        title: 'Enhanced user engagement',
-        description:
-          'Captivate your audience with interactive elements, intuitive navigation, and visually appealing layouts, encouraging longer visits.',
-      },
-      {
-        title: 'Continuous improvement',
-        description:
-          'Ensure your website stays aligned with the latest trends and technologies through regular updates and enhancements.',
-      },
-      {
-        title: 'Time and resource efficiency',
-        description:
-          'Skip the time-consuming process of building a website from scratch and launch your online presence sooner with AstroWind.',
-      },
-      {
-        title: 'Community support',
-        description: `Join the growing AstroWind community for insights, resources, and assistance, ensuring you're never alone on your web development journey.`,
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1611462985358-60d3498e0364?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Astronauts Image',
-    }}
-  >
-    <Fragment slot="content">Designed to foster growth and success.</Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <!-- Steps Widget ****************** -->
+  <!-- How to activate IPTV -->
 
   <Steps
-    title="Get your dream website up and running in no time with AstroWind."
+    id="how-to-activate"
+    title="How to activate IPTV on your device"
+    subtitle={'<a href="' + home + '" class="' + cl + '">' + brand + '</a>: get started in a few steps. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact us</a> or see <a href="' + home + '#pricing" class="' + cl + '">plans</a> and <a href="' + getPermalink('/about') + '" class="' + cl + '">about us</a>.'}
+    tagline="Simple process"
     items={[
       {
-        title: 'Step 1: <span class="font-medium">Download</span>',
-        description:
-          "Kickstart with GitHub! Either fork the AstroWind template or simply click 'Use this template'. Your canvas awaits, ready for your digital masterpiece. In just a few clicks, you've already set the foundation.",
-        icon: 'tabler:package',
+        title: 'Contact us',
+        description: 'Get in touch via WhatsApp or our <a href="' + getPermalink('/contact') + '" class="' + cl + '">contact form</a>. We will help you choose the right <a href="' + home + '#pricing" class="' + cl + '">plan</a> and answer any questions.',
+        icon: 'tabler:message-circle',
       },
       {
-        title: 'Step 2: <span class="font-medium">Add content</span>',
-        description:
-          "Pour your vision into it. Add images, text, and all that jazz to breathe life into your digital space. Remember, it's the content that tells your story, so make it captivating.",
-        icon: 'tabler:letter-case',
+        title: 'Install a player',
+        description: 'Install an IPTV player on your device—e.g. IBO Player, Tivimate, Smart IPTV, or similar. We can guide you if needed.',
+        icon: 'tabler:device-mobile',
       },
       {
-        title: 'Step 3: <span class="font-medium">Customize styles</span>',
-        description:
-          'Give it your personal touch. Tailor colors, fonts, and layouts until it feels just right. Your unique flair, amplified by AstroWind! Precision in design ensures a seamless user experience.',
-        icon: 'tabler:paint',
+        title: 'Pay and get your data',
+        description: 'Choose your plan, pay securely (card, PayPal, or bank transfer), and receive your login credentials by email or WhatsApp.',
+        icon: 'tabler:credit-card',
       },
       {
-        title: 'Ready!',
-        icon: 'tabler:check',
+        title: 'Enjoy',
+        description: 'Enter your credentials in the player and start watching. If you need anything later, we are here whenever you need us.',
+        icon: 'tabler:player-play',
       },
     ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      alt: 'Steps image',
-    }}
   />
 
-  <!-- Features2 Widget ************** -->
-
-  <Features2
-    title="Most used widgets"
-    subtitle="Provides frequently used components for building websites using Tailwind CSS"
-    tagline="Components"
-    items={[
-      {
-        title: 'Headers',
-        description: "Ever tried driving without GPS? Boom! That's why websites need headers for direction.",
-        icon: 'flat-color-icons:template',
-      },
-      {
-        title: 'Heros',
-        description:
-          "Picture a superhero landing – epic, right? That's the job of a Hero section, making grand entrances!",
-        icon: 'flat-color-icons:gallery',
-      },
-      {
-        title: 'Features',
-        description:
-          'Where websites strut their stuff and show off superpowers. No holding back on the bragging rights here!',
-        icon: 'flat-color-icons:approval',
-      },
-      {
-        title: 'Content',
-        description:
-          "Dive into the meat and potatoes of a site; without it, you'd just be window shopping. Content is king.",
-        icon: 'flat-color-icons:document',
-      },
-      {
-        title: 'Call-to-Action',
-        description:
-          'That enthusiastic friend who\'s always urging, "Do it! Do it!"? Yeah, that\'s this button nudging you towards adventure.',
-        icon: 'flat-color-icons:advertising',
-      },
-      {
-        title: 'Pricing',
-        description: 'Behold the dessert menu of the website world. Tempting choices await, can you resist?',
-        icon: 'flat-color-icons:currency-exchange',
-      },
-      {
-        title: 'Testimonial',
-        description: 'Step into the gossip corner! Here, other visitors spill the beans and share the juicy details.',
-        icon: 'flat-color-icons:voice-presentation',
-      },
-      {
-        title: 'Contact',
-        description:
-          'Like a digital mailbox, but faster! Drop a line, ask a question, or send a virtual high-five. Ding! Message in.',
-        icon: 'flat-color-icons:business-contact',
-      },
-      {
-        title: 'Footers',
-        description: "The footer's like the credits of a movie but sprinkled with easter eggs. Time to hunt!",
-        icon: 'flat-color-icons:database',
-      },
-    ]}
-  >
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
-  </Features2>
-
-  <!-- HighlightedPosts Widget ******* -->
+  <!-- Blog -->
 
   <BlogLatestPosts
     title="Find out more content in our Blog"
-    information={`The blog is used to display AstroWind documentation.
-                        Each new article will be an important step that you will need to know to be an expert in creating a website using Astro + Tailwind CSS.
-                        Astro is a very interesting technology. Thanks.
-                `}
+    information={'Read more from <a href="' + home + '" class="' + cl + '">' + brand + '</a>. Visit our <a href="' + getPermalink('/about') + '" class="' + cl + '">about</a> and <a href="' + getPermalink('/contact') + '" class="' + cl + '">contact</a> pages, or see <a href="' + home + '#faqs" class="' + cl + '">FAQs</a>.'}
   />
 
   <!-- FAQs Widget ******************* -->
 
   <FAQs
+    id="faqs"
     title="Frequently Asked Questions"
-    subtitle="Dive into the following questions to gain insights into the powerful features that AstroWind offers and how it can elevate your web development journey."
+    subtitle={'Quick answers about <a href="' + home + '" class="' + cl + '">' + brand + '</a>: payment, devices, support. See our <a href="' + home + '#pricing" class="' + cl + '">plans</a> and <a href="' + getPermalink('/contact') + '" class="' + cl + '">contact</a>.'}
     tagline="FAQs"
     classes={{ container: 'max-w-6xl' }}
     items={[
       {
-        title: 'Why AstroWind?',
+        title: 'What is IPTV?',
         description:
-          "Michael Knight a young loner on a crusade to champion the cause of the innocent. The helpless. The powerless in a world of criminals who operate above the law. Here he comes Here comes Speed Racer. He's a demon on wheels.",
+          'IPTV (Internet Protocol Television) delivers live TV, movies, and series over the internet. At <a href="' + home + '" class="' + cl + '">' + brand + '</a> you watch on your TV, phone, tablet, or other devices using an app—no satellite dish or cable. See our <a href="' + home + '#features" class="' + cl + '">features</a>.',
       },
       {
-        title: 'What do I need to start?',
+        title: 'How do I pay?',
         description:
-          'Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds. Many say exploration is part of our destiny, but it’s actually our duty to future generations.',
+          'We accept credit card, PayPal, and bank transfer. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact our support</a> via WhatsApp to complete your order. See <a href="' + home + '#pricing" class="' + cl + '">pricing</a> and <a href="' + getPermalink('/pricing') + '" class="' + cl + '">plans page</a>.',
       },
       {
-        title: 'How to install the Astro + Tailwind CSS template?',
+        title: 'Which devices are supported?',
         description:
-          "Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows.",
+          'We support Smart TVs, Android and iOS, Fire Stick, Mag boxes, and popular IPTV apps. One subscription works across your devices. <a href="' + getPermalink('/about') + '" class="' + cl + '">Learn more</a> and <a href="' + home + '#how-to-activate" class="' + cl + '">how to activate</a>.',
       },
       {
-        title: "What's something that you don't understand?",
+        title: 'Is there a free trial?',
         description:
-          "A flower in my garden, a mystery in my panties. Heart attack never stopped old Big Bear. I didn't even know we were calling him Big Bear.",
+          'Yes. We offer a free trial. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact us</a> to get started—no obligation. Or <a href="' + home + '#pricing" class="' + cl + '">view plans</a>.',
       },
       {
-        title: 'What is something that you would like to try again?',
+        title: 'How do I cancel?',
         description:
-          "A business big enough that it could be listed on the NASDAQ goes belly up. Disappears! It ceases to exist without me. No, you clearly don't know who you're talking to, so let me clue you in.",
+          '<a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact our support</a> before your plan renews to cancel. Your access continues until the end of your billing period. See <a href="' + getPermalink('/about') + '" class="' + cl + '">about us</a>.',
       },
       {
-        title: 'If you could only ask one question to each person you meet, what would that question be?',
+        title: 'Can I get a refund?',
         description:
-          "This is not about revenge. This is about justice. A lot of things can change in twelve years, Admiral. Well, that's certainly good to know. About four years. I got tired of hearing how young I looked.",
+          'Refunds are handled according to our policy. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact support</a> with your order details. <a href="' + home + '" class="' + cl + '">' + brand + '</a> will assist you.',
+      },
+      {
+        title: 'How will I receive my credentials?',
+        description:
+          'After payment is confirmed, we send your login details by email or WhatsApp. <a href="' + home + '#how-to-activate" class="' + cl + '">How to activate</a>. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact us</a> if you need help.',
       },
     ]}
   />
@@ -367,33 +513,35 @@ const metadata = {
 
   <Stats
     stats={[
-      { title: 'Downloads', amount: '132K' },
-      { title: 'Stars', amount: '24.8K' },
-      { title: 'Forks', amount: '10.3K' },
-      { title: 'Users', amount: '48.4K' },
+      { title: 'Channels', amount: '+49K' },
+      { title: 'Categories', amount: '+1K' },
+      { title: 'Servers', amount: '+30' },
+      { title: 'Satisfied clients', amount: '+10K' },
     ]}
   />
 
-  <!-- CallToAction Widget *********** -->
+  <!-- Contact CTA -->
 
   <CallToAction
     actions={[
       {
         variant: 'primary',
-        text: 'Get template',
-        href: 'https://github.com/arthelokyo/astrowind',
-        target: '_blank',
-        icon: 'tabler:download',
+        text: 'Contact us',
+        href: getPermalink('/contact'),
+      },
+      {
+        variant: 'secondary',
+        text: 'View plans',
+        href: getPermalink('/pricing'),
       },
     ]}
   >
     <Fragment slot="title">
-      Astro&nbsp;+&nbsp;<br class="block sm:hidden" /><span class="sm:whitespace-nowrap">Tailwind CSS</span>
+      Get in touch
     </Fragment>
 
     <Fragment slot="subtitle">
-      Be very surprised by these huge fake numbers you are seeing on this page. <br class="hidden md:inline" />Don't
-      waste more time! :P
+      Questions about <a href={getPermalink('/pricing')} class={cl}>plans</a>, <a href={`${home}#faqs`} class={cl}>FAQ</a>, or a free trial? <a href={home} class={cl}>{brand}</a> is here to help. <a href={getPermalink('/contact')} class={cl}>Reach out</a> or read <a href={getPermalink('/about')} class={cl}>about us</a>.
     </Fragment>
   </CallToAction>
 </Layout>

@@ -17,6 +17,11 @@ const {
   classes = {},
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
+
+const visibleCount = 3;
+const visibleTestimonials = testimonials.slice(0, visibleCount);
+const moreTestimonials = testimonials.slice(visibleCount);
+const hasMore = moreTestimonials.length > 0;
 ---
 
 <WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-6xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
@@ -24,11 +29,11 @@ const {
 
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
     {
-      testimonials &&
-        testimonials.map(({ title, testimonial, name, job, image }) => (
+      visibleTestimonials &&
+        visibleTestimonials.map(({ title: cardTitle, testimonial, name, job, image }) => (
           <div class="flex h-auto intersect-once motion-safe:md:intersect:animate-fade motion-safe:md:opacity-0 intersect-quarter">
             <div class="flex flex-col p-4 md:p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600">
-              {title && <h2 class="text-lg font-medium leading-6 pb-4">{title}</h2>}
+              {cardTitle && <h2 class="text-lg font-medium leading-6 pb-4">{cardTitle}</h2>}
               {testimonial && (
                 <blockquote class="flex-auto">
                   <p class="text-muted">" {testimonial} "</p>
@@ -39,17 +44,17 @@ const {
 
               <div class="flex items-center">
                 {image && (
-                  <div class="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-600">
+                  <div class="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-600 overflow-hidden flex-shrink-0">
                     {typeof image === 'string' ? (
                       <Fragment set:html={image} />
                     ) : (
                       <Image
-                        class="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-600 min-w-full min-h-full"
+                        class="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-600 min-w-full min-h-full object-cover"
                         width={40}
                         height={40}
                         widths={[400, 768]}
                         layout="fixed"
-                        {...image}
+                        {...(image as object)}
                       />
                     )}
                   </div>
@@ -65,11 +70,84 @@ const {
         ))
     }
   </div>
+
+  {hasMore && (
+    <div id="more-testimonials" class="hidden grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+      {
+        moreTestimonials.map(({ title: cardTitle, testimonial, name, job, image }) => (
+          <div class="flex h-auto">
+            <div class="flex flex-col p-4 md:p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-600">
+              {cardTitle && <h2 class="text-lg font-medium leading-6 pb-4">{cardTitle}</h2>}
+              {testimonial && (
+                <blockquote class="flex-auto">
+                  <p class="text-muted">" {testimonial} "</p>
+                </blockquote>
+              )}
+
+              <hr class="border-slate-200 dark:border-slate-600 my-4" />
+
+              <div class="flex items-center">
+                {image && (
+                  <div class="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-600 overflow-hidden flex-shrink-0">
+                    {typeof image === 'string' ? (
+                      <Fragment set:html={image} />
+                    ) : (
+                      <Image
+                        class="h-10 w-10 rounded-full border border-slate-200 dark:border-slate-600 min-w-full min-h-full object-cover"
+                        width={40}
+                        height={40}
+                        widths={[400, 768]}
+                        layout="fixed"
+                        {...(image as object)}
+                      />
+                    )}
+                  </div>
+                )}
+
+                <div class="grow ml-3 rtl:ml-0 rtl:mr-3">
+                  {name && <p class="text-base font-semibold">{name}</p>}
+                  {job && <p class="text-xs text-muted">{job}</p>}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+    }
+    </div>
+  )}
+
+  {hasMore && (
+    <div class="flex justify-center mt-8">
+      <button
+        id="testimonials-show-more-btn"
+        type="button"
+        class="text-primary dark:text-primary-light font-semibold hover:underline py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+      >
+        Show more testimonials
+      </button>
+    </div>
+  )}
+
   {
-    callToAction && (
+    callToAction && !hasMore && (
       <div class="flex justify-center mx-auto w-fit mt-8 md:mt-12 font-medium">
         <Button {...callToAction} />
       </div>
     )
   }
 </WidgetWrapper>
+
+{hasMore && (
+  <script>
+    document.getElementById('testimonials-show-more-btn')?.addEventListener('click', function () {
+      const el = document.getElementById('more-testimonials');
+      const btn = document.getElementById('testimonials-show-more-btn');
+      if (el && btn) {
+        el.classList.toggle('hidden');
+        (btn as HTMLButtonElement).textContent = el.classList.contains('hidden')
+          ? 'Show more testimonials'
+          : 'Show less testimonials';
+      }
+    });
+  </script>
+)}

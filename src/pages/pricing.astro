@@ -1,11 +1,16 @@
 ---
+import { SITE } from 'astrowind:config';
+import { getPermalink, getHomePermalink } from '~/utils/permalinks';
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import Prices from '~/components/widgets/Pricing.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Steps from '~/components/widgets/Steps.astro';
 import Features3 from '~/components/widgets/Features3.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const home = getHomePermalink();
+const brand = SITE?.name ?? 'Our service';
+const cl = 'text-primary font-medium hover:underline';
 
 const metadata = {
   title: 'Pricing',
@@ -16,228 +21,206 @@ const metadata = {
   <!-- HeroText Widget ******************* -->
 
   <HeroText
-    tagline="Pricing"
-    title="Stellar Pricing for Every Journey"
-    subtitle="Choose the perfect plan that aligns with your cosmic goals."
+    tagline="Plans"
+    title="Choose your plan"
+    subtitle={'<a href="' + home + '" class="' + cl + '">' + brand + '</a> plans: same features, more savings the longer you subscribe. <a href="' + getPermalink('/about') + '" class="' + cl + '">Learn about our service</a>, see our <a href="' + home + '#features" class="' + cl + '">features</a>, or <a href="https://wa.me/212780761806" class="' + cl + '">contact us for a free trial</a>. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact</a>.'}
   />
 
   <!-- Pricing Widget ******************* -->
 
   <Prices
-    title="Our prices"
-    subtitle="Only pay for what you need"
+    id="pricing"
+    title=""
+    subtitle=""
     prices={[
       {
-        title: 'basic',
-        subtitle: 'Optimal choice for personal use',
-        price: 29,
-        period: 'per month',
+        title: 'Monthly',
+        subtitle: '',
+        price: 17,
+        period: '/month',
         items: [
-          {
-            description: 'Etiam in libero, et volutpat',
-          },
-          {
-            description: 'Aenean ac nunc dolor tristique',
-          },
-          {
-            description: 'Cras scelerisque accumsan lib',
-          },
-          {
-            description: 'In hac habitasse',
-          },
+          { description: '50,000+ channels' },
+          { description: 'No freeze' },
+          { description: 'Free guidance' },
+          { description: 'FHD, 4K, 8K' },
+          { description: 'All devices' },
+          { description: 'Privacy protection & built-in VPN' },
+          { description: 'Free auto updates' },
+          { description: 'Anti-freeze TM 9.8 technology' },
+          { description: 'Available EPG' },
+          { description: '24/7 support' },
         ],
-        callToAction: {
-          target: '_blank',
-          text: 'Get started',
-          href: '#',
-        },
+        callToAction: { text: 'Buy now', href: 'https://wa.me/212780761806' },
       },
       {
-        title: 'standard',
-        subtitle: 'Optimal choice for small teams',
-        price: 69,
-        period: 'Per Month',
+        title: '3 Months',
+        subtitle: 'Save 17%',
+        price: 37,
+        period: '/3 months',
         items: [
-          {
-            description: 'Proin vel laoreet',
-          },
-          {
-            description: 'Ut efficitur habitasse egestas',
-          },
-          {
-            description: 'Volutpat hac curabitur',
-          },
-          {
-            description: 'Pellentesque blandit ut nibh',
-          },
-          {
-            description: 'Donec fringilla sem',
-          },
+          { description: '50,000+ channels' },
+          { description: 'No freeze' },
+          { description: 'Free guidance' },
+          { description: 'FHD, 4K, 8K' },
+          { description: 'All devices' },
+          { description: 'Privacy protection & built-in VPN' },
+          { description: 'Free auto updates' },
+          { description: 'Anti-freeze TM 9.8 technology' },
+          { description: 'Available EPG' },
+          { description: '24/7 support' },
         ],
-        callToAction: {
-          target: '_blank',
-          text: 'Get started',
-          href: '#',
-        },
+        callToAction: { text: 'Buy now', href: 'https://wa.me/212780761806' },
+      },
+      {
+        title: '6 Months',
+        subtitle: 'Save 25%',
+        price: 49,
+        period: '/6 months',
+        items: [
+          { description: '50,000+ channels' },
+          { description: 'No freeze' },
+          { description: 'Free guidance' },
+          { description: 'FHD, 4K, 8K' },
+          { description: 'All devices' },
+          { description: 'Privacy protection & built-in VPN' },
+          { description: 'Free auto updates' },
+          { description: 'Anti-freeze TM 9.8 technology' },
+          { description: 'Available EPG' },
+          { description: '24/7 support' },
+        ],
+        callToAction: { text: 'Buy now', href: 'https://wa.me/212780761806' },
         hasRibbon: true,
-        ribbonTitle: 'popular',
+        ribbonTitle: 'Popular',
       },
       {
-        title: 'premium',
-        subtitle: 'Optimal choice for companies',
-        price: 199,
-        period: 'Per Month',
+        title: 'Yearly',
+        subtitle: 'Save 33%',
+        price: 67,
+        period: '/year',
         items: [
-          {
-            description: 'Curabitur suscipit risus',
-          },
-          {
-            description: 'Aliquam habitasse malesuada',
-          },
-          {
-            description: 'Suspendisse sit amet blandit',
-          },
-          {
-            description: 'Suspendisse auctor blandit dui',
-          },
+          { description: '50,000+ channels' },
+          { description: 'No freeze' },
+          { description: 'Free guidance' },
+          { description: 'FHD, 4K, 8K' },
+          { description: 'All devices' },
+          { description: 'Privacy protection & built-in VPN' },
+          { description: 'Free auto updates' },
+          { description: 'Anti-freeze TM 9.8 technology' },
+          { description: 'Available EPG' },
+          { description: '24/7 support' },
         ],
-        callToAction: {
-          target: '_blank',
-          text: 'Get started',
-          href: '#',
-        },
+        callToAction: { text: 'Buy now', href: 'https://wa.me/212780761806' },
       },
     ]}
   />
 
-  <!-- Features3 Widget ************** -->
+  <!-- Service features -->
 
   <Features3
-    title="Price-related features"
-    subtitle="Discover the advantages of choosing our plans"
+    title="What you get with every plan"
+    subtitle={'All <a href="' + home + '" class="' + cl + '">' + brand + '</a> plans include the same features. Pick the duration that suits you. See <a href="' + home + '#pricing" class="' + cl + '">plans on home</a> or <a href="' + getPermalink('/about') + '" class="' + cl + '">about us</a>.'}
     columns={2}
     items={[
       {
-        title: 'Tiered Pricing Plans',
-        description: 'Choose from a range of pricing plans designed to accommodate different budgets and requirements.',
-        icon: 'tabler:stairs',
+        title: 'Flexible plan lengths',
+        description: 'Choose monthly, 3 months, 6 months, or yearly. The longer you subscribe, the more you save—no lock-in. <a href="' + home + '#pricing" class="' + cl + '">View plans</a>.',
+        icon: 'tabler:calendar',
       },
       {
-        title: 'Transparent Pricing',
-        description: 'Clearly displayed pricing details for each plan, with no hidden costs or unexpected charges.',
-        icon: 'tabler:flip-vertical',
+        title: 'Transparent pricing',
+        description: 'The price you see is what you pay. No hidden fees. All plans include the same channels and features. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact us</a> with questions.',
+        icon: 'tabler:receipt',
       },
       {
-        title: 'Secure Payment Methods',
-        description: 'Secure payment gateways to protect your financial information during transactions.',
+        title: 'Secure payments',
+        description: 'Pay safely with credit card, PayPal, or bank transfer. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact support</a> to complete your order. See <a href="' + home + '#faqs" class="' + cl + '">FAQ</a>.',
         icon: 'tabler:shield-lock',
       },
       {
-        title: 'Instant Access',
-        description: `Immediate access to your chosen plan's features and templates upon subscription.`,
-        icon: 'tabler:accessible',
+        title: 'Instant activation',
+        description: 'Your credentials are sent by email or WhatsApp shortly after payment. <a href="' + home + '#how-to-activate" class="' + cl + '">How to activate</a>. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Need help?</a>',
+        icon: 'tabler:bolt',
       },
       {
-        title: 'Upgrade Value',
-        description: 'Upgrade to higher-tier plans to unlock more features and benefits for an enhanced experience.',
-        icon: 'tabler:chevrons-up',
+        title: 'Same features, every plan',
+        description: '50,000+ channels, FHD/4K, all devices, EPG, and 24/7 support. <a href="' + home + '#features" class="' + cl + '">Our features</a>. Only duration and price change.',
+        icon: 'tabler:device-tv',
       },
       {
-        title: '24H support',
-        description: 'Questions answered via live chat, email or phone, every calendar day.',
+        title: '24/7 support',
+        description: 'Questions about your plan or setup? <a href="' + getPermalink('/contact') + '" class="' + cl + '">Our support</a> is available around the clock via WhatsApp. <a href="' + home + '" class="' + cl + '">' + brand + '</a> is here for you.',
         icon: 'tabler:headset',
       },
     ]}
     classes={{ container: 'max-w-5xl' }}
   />
 
-  <!-- Steps Widget ****************** -->
+  <!-- How to get started -->
 
   <Steps
-    title="A guided journey from plans to creativity"
-    tagline="simplified process"
+    title="How to get your IPTV plan"
+    tagline="Simple process"
+    subtitle={'<a href="' + home + '" class="' + cl + '">' + brand + '</a>: contact us, choose your plan, pay, and start watching. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact</a> · <a href="' + home + '#pricing" class="' + cl + '">Plans</a> · <a href="' + getPermalink('/about') + '" class="' + cl + '">About</a>.'}
     isReversed={true}
     items={[
       {
-        title: 'Explore plans',
-        icon: 'tabler:number-1',
+        title: 'Contact us',
+        description: 'Reach out via WhatsApp or our <a href="' + getPermalink('/contact') + '" class="' + cl + '">contact form</a>. We will help you pick the right <a href="' + home + '#pricing" class="' + cl + '">plan</a> and answer any questions.',
+        icon: 'tabler:message-circle',
       },
       {
-        title: 'Select a plan',
-        icon: 'tabler:number-2',
+        title: 'Choose your plan',
+        description: 'Select monthly, 3 months, 6 months, or yearly. See <a href="' + home + '#pricing" class="' + cl + '">plans on home</a> or <a href="' + getPermalink('/about') + '" class="' + cl + '">about ' + brand + '</a>. Tell us and we send payment details.',
+        icon: 'tabler:credit-card',
       },
       {
-        title: 'Sign Up / Log In',
-        icon: 'tabler:number-3',
+        title: 'Pay securely',
+        description: 'Pay by card, PayPal, or bank transfer. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact us</a> to complete. Credentials sent after payment. <a href="' + home + '#how-to-activate" class="' + cl + '">How to activate</a>.',
+        icon: 'tabler:lock',
       },
       {
-        title: 'Review order',
-        icon: 'tabler:number-4',
-      },
-      {
-        title: 'Enter payment details',
-        icon: 'tabler:number-5',
-      },
-      {
-        title: 'Confirmation',
-        icon: 'tabler:number-6',
-      },
-      {
-        title: 'Download and start using the template(s)',
-        icon: 'tabler:number-7',
+        title: 'Start watching',
+        description: 'Enter your credentials in your IPTV player and enjoy. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Need help?</a> <a href="' + home + '" class="' + cl + '">' + brand + '</a> is here whenever you need us.',
+        icon: 'tabler:player-play',
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1536816579748-4ecb3f03d72a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      alt: 'Steps image',
+      src: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80',
+      alt: 'IPTV streaming',
     }}
   />
 
-  <!-- FAQs Widget ******************* -->
+  <!-- Pricing FAQs -->
 
   <FAQs
     title="Pricing FAQs"
-    subtitle="Choosing the right plan is important, and we're here to answer your questions. If you have queries about our pricing options, you're in the right place."
+    subtitle={'Choosing the right plan is important. <a href="' + home + '" class="' + cl + '">' + brand + '</a> answers to common questions about our IPTV plans. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact us</a> · <a href="' + home + '#faqs" class="' + cl + '">More FAQ</a> · <a href="' + getPermalink('/about') + '" class="' + cl + '">About</a>.'}
     columns={1}
     items={[
       {
         title: 'Do the plans come with customer support?',
         description:
-          'Absolutely, all plans include access to our dedicated customer support to assist you with any queries or concerns.',
+          'Yes. All <a href="' + home + '" class="' + cl + '">' + brand + '</a> plans include 24/7 support. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact us</a> via WhatsApp or our contact form for setup, channels, or any issues. See <a href="' + home + '#features" class="' + cl + '">features</a>.',
       },
       {
         title: 'Is there a trial period for the different plans?',
         description:
-          "Unfortunately, we don't offer trial periods for the plans. However, you can check out our demo section to preview the quality of our templates.",
+          'We offer a free trial. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Get in touch</a> and we will set you up—no obligation. Or <a href="' + home + '#pricing" class="' + cl + '">view plans</a> and <a href="' + getPermalink('/about') + '" class="' + cl + '">learn about us</a>.',
       },
       {
         title: 'Can I switch between plans?',
         description:
-          'Certainly! You can easily upgrade or downgrade your plan, at any time, to find the one that best suits your evolving requirements.',
+          'When your current plan ends, you can choose any other plan. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact us</a> before renewal and we will arrange it. <a href="' + home + '#pricing" class="' + cl + '">See plans</a>.',
       },
       {
         title: 'What payment methods do you accept?',
         description:
-          'We accept major credit cards and online payment methods to ensure a convenient and secure transaction process.',
+          'We accept credit card, PayPal, and bank transfer. <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact our support</a> via WhatsApp to complete your order. <a href="' + home + '#faqs" class="' + cl + '">FAQ</a>.',
       },
       {
         title: 'Are there any hidden fees beyond the displayed cost?',
         description:
-          'No, the subscription cost covers all the features and templates listed under each plan. There are no hidden fees or extra charges.',
-      },
-    ]}
-  />
-
-  <!-- CallToAction Widget *********** -->
-
-  <CallToAction
-    title="Ready to boost your projects?"
-    subtitle="Join our community of satisfied customers who have transformed their work with our templates."
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Get started now',
-        href: '/',
+          'No. The price shown is what you pay. All <a href="' + home + '" class="' + cl + '">' + brand + '</a> plans include the same features. <a href="' + home + '#features" class="' + cl + '">Features</a> · <a href="' + getPermalink('/about') + '" class="' + cl + '">About us</a>. No hidden fees.',
       },
     ]}
   />

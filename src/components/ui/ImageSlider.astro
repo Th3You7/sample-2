@@ -1,0 +1,70 @@
+---
+export interface Props {
+  images: Array<{ src: string; alt?: string }>;
+  intervalMs?: number;
+  sliderId?: string;
+}
+
+const { images = [], intervalMs = 4000, sliderId = `slider-${Math.random().toString(36).slice(2, 9)}` } = Astro.props;
+
+const n = images.length;
+const get = (i: number) => images[i % n] ?? images[0];
+---
+
+<div
+  class="relative m-auto max-w-4xl overflow-hidden"
+  data-image-slider
+  data-slider-id={sliderId}
+  data-interval={intervalMs}
+  data-images={JSON.stringify(images)}
+>
+  <div class="grid grid-cols-2 gap-1 p-1 aspect-[4/3]">
+    {
+      [0, 1].map((slot) => {
+        const img = get(slot);
+        return (
+          <img
+            src={img.src}
+            alt={img.alt ?? ''}
+            class="h-full w-full object-contain object-center transition-opacity duration-500"
+            data-slot={slot}
+            loading={slot === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        );
+      })
+    }
+  </div>
+</div>
+
+<script>
+  function initSliders() {
+    document.querySelectorAll('[data-image-slider]').forEach((container) => {
+      const el = container as HTMLElement;
+      const images = JSON.parse(el.dataset.images || '[]');
+      if (images.length === 0) return;
+      const slots = el.querySelectorAll('[data-slot]');
+      const interval = parseInt(el.dataset.interval || '4000', 10);
+      let start = 0;
+      const n = images.length;
+      const update = () => {
+        start = (start + 1) % n;
+        slots.forEach((slot, k) => {
+          const idx = (start + k) % n;
+          const img = images[idx];
+          if (img) {
+            const s = slot as HTMLImageElement;
+            s.src = img.src;
+            s.alt = img.alt ?? '';
+          }
+        });
+      };
+      setInterval(update, interval);
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSliders);
+  } else {
+    initSliders();
+  }
+</script>

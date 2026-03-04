@@ -1,8 +1,14 @@
 ---
+import { SITE } from 'astrowind:config';
+import { getPermalink, getHomePermalink } from '~/utils/permalinks';
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import ContactUs from '~/components/widgets/Contact.astro';
 import Features2 from '~/components/widgets/Features2.astro';
+
+const home = getHomePermalink();
+const brand = SITE?.name ?? 'Our service';
+const cl = 'text-primary font-medium hover:underline';
 
 const metadata = {
   title: 'Contact',
@@ -12,12 +18,16 @@ const metadata = {
 <Layout metadata={metadata}>
   <!-- HeroText Widget ******************* -->
 
-  <HeroText tagline="Contact" title="Let's Connect!" />
+  <HeroText
+    tagline="Contact"
+    title="Let's Connect!"
+    subtitle={'Reach <a href="' + home + '" class="' + cl + '">' + brand + '</a> for support, orders, or a free trial. See our <a href="' + home + '#features" class="' + cl + '">features</a>, <a href="' + home + '#pricing" class="' + cl + '">plans</a>, <a href="' + home + '#faqs" class="' + cl + '">FAQ</a>, or <a href="' + getPermalink('/about') + '" class="' + cl + '">about us</a>.'}
+  />
 
   <ContactUs
     id="form"
     title="Drop us a message today!"
-    subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
+    subtitle={'For quicker answers, explore our <a href="' + home + '#faqs" class="' + cl + '">FAQ</a> section. See also <a href="' + home + '" class="' + cl + '">' + brand + '</a>, our <a href="' + home + '#pricing" class="' + cl + '">plans</a>, and <a href="' + getPermalink('/about') + '" class="' + cl + '">about</a>. If not, our support team is delighted to help.'}
     inputs={[
       {
         type: 'text',
@@ -47,31 +57,31 @@ const metadata = {
     items={[
       {
         title: 'General support',
-        description: `Chat with us for inquiries related to account management, website navigation, payment issues, accessing purchased templates or general questions about the website's functionality.`,
+        description: 'Chat with <a href="' + home + '" class="' + cl + '">' + brand + '</a> for account, payment, or setup. <a href="' + home + '#faqs" class="' + cl + '">FAQ</a> · <a href="' + home + '#pricing" class="' + cl + '">Plans</a> · <a href="' + getPermalink('/about') + '" class="' + cl + '">About</a>.',
       },
       {
         title: 'Contact sales',
         description:
-          'Chat with us for questions about purchases, customization options, licensing for commercial use, inquiries about specific template, etc.',
+          'Questions about <a href="' + home + '#pricing" class="' + cl + '">plans</a> or orders? <a href="' + getPermalink('/pricing') + '" class="' + cl + '">View pricing</a>. <a href="' + home + '" class="' + cl + '">' + brand + '</a> is here to help.',
       },
       {
         title: 'Technical support',
         description:
-          'Chat with us when facing issues like template installation, problems editing difficulties, compatibility issues with software or download errors, or other technical challenges related to using the templates.',
+          'Setup or activation help? <a href="' + home + '#how-to-activate" class="' + cl + '">How to activate</a>. <a href="' + home + '#features" class="' + cl + '">Features</a> · <a href="' + getPermalink('/contact') + '" class="' + cl + '">Contact</a>.',
       },
       {
-        title: 'Phone',
-        description: '+1 (234) 567-890',
-        icon: 'tabler:headset',
+        title: 'WhatsApp',
+        description: 'Fastest way to reach <a href="' + home + '" class="' + cl + '">' + brand + '</a>. <a href="' + home + '#pricing" class="' + cl + '">Plans</a> · <a href="' + getPermalink('/about') + '" class="' + cl + '">About</a>.',
+        icon: 'tabler:brand-whatsapp',
       },
       {
         title: 'Email',
-        description: 'contact@support.com',
+        description: 'Use the form above or see <a href="' + home + '#faqs" class="' + cl + '">FAQ</a> and <a href="' + getPermalink('/pricing') + '" class="' + cl + '">pricing</a>.',
         icon: 'tabler:mail',
       },
       {
-        title: 'Location',
-        description: '1234 Lorem Ipsum St, 12345, Miami, EEUU',
+        title: 'More links',
+        description: '<a href="' + home + '" class="' + cl + '">Home</a> · <a href="' + getPermalink('/pricing') + '" class="' + cl + '">Pricing</a> · <a href="' + getPermalink('/about') + '" class="' + cl + '">About</a> · <a href="' + home + '#features" class="' + cl + '">Features</a>.',
         icon: 'tabler:map-pin',
       },
     ]}

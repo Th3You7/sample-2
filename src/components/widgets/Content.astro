@@ -3,6 +3,7 @@ import type { Content as Props } from '~/types';
 import Headline from '~/components/ui/Headline.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Image from '~/components/common/Image.astro';
+import ImageSlider from '~/components/ui/ImageSlider.astro';
 import Button from '~/components/ui/Button.astro';
 import ItemGrid from '~/components/ui/ItemGrid.astro';
 
@@ -15,6 +16,7 @@ const {
   items = [],
   columns,
   image = await Astro.slots.render('image'),
+  images = [],
   isReversed = false,
   isAfterContent = false,
 
@@ -70,10 +72,22 @@ const {
       </div>
       <div aria-hidden="true" class="mt-10 md:mt-0 md:basis-1/2">
         {
-          image && (
+          images && images.length > 0 ? (
+            <ImageSlider images={images} sliderId={id ? `content-${id}` : undefined} />
+          ) : image ? (
             <div class="relative m-auto max-w-4xl">
               {typeof image === 'string' ? (
                 <Fragment set:html={image} />
+              ) : (image as { src?: string }).src?.startsWith('/') ? (
+                <img
+                  src={(image as { src: string }).src}
+                  alt={((image as { alt?: string }).alt) ?? ''}
+                  class="mx-auto w-full rounded-lg shadow-lg object-contain"
+                  width={500}
+                  height={500}
+                  loading="lazy"
+                  decoding="async"
+                />
               ) : (
                 <Image
                   class="mx-auto w-full rounded-lg bg-gray-500 shadow-lg"
@@ -82,11 +96,11 @@ const {
                   widths={[400, 768]}
                   sizes="(max-width: 768px) 100vw, 432px"
                   layout="responsive"
-                  {...image}
+                  {...(image as object)}
                 />
               )}
             </div>
-          )
+          ) : null
         }
       </div>
     </div>
